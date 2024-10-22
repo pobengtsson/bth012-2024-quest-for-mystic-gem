@@ -1,0 +1,101 @@
+import { tileGenerator } from './tilegenerator.mjs'
+
+export function randomPosition (dim, prng) {
+  const x = Math.floor(prng() * dim.width)
+  const y = Math.floor(prng() * dim.height)
+  return { x, y } // NOTE: object property shorthand, same as writing { x: x, y: y}
+}
+
+export class GameMap {
+  constructor (dimensions, tileiterator = tileGenerator()) {
+    this.dimensions = dimensions
+    const width = dimensions.width
+    const height = dimensions.height
+    this.tiles = new Array(height)
+    this.changeList = []
+    for (let x = 0; x < height; x++) {
+      this.tiles[x] = new Array(width)
+      for (let y = 0; y < width; y++) {
+        this.tiles[x][y] = tileiterator.next().value
+      }
+    }
+  }
+
+  visit () {
+    this.tiles[this.playerPos.y][this.playerPos.x].isVisited = true
+  }
+
+  nextCoordinates(from, direction) {
+    switch (direction) {
+       case 'ArrowUp':
+          return {x: from.x, y: from.y-1}
+       case 'ArrowDown':
+          return {x: from.x, y: from.y+1}
+       case 'ArrowLeft':
+          return {x: from.x-1, y: from.y}
+       case 'ArrowRight':
+          return {x: from.x+1, y: from.y}
+       default:
+          throw new Error('Unknown direction')
+    }
+  }
+
+  triesToMoveOutsideMap(from, direction) {
+    switch (direction) {
+      case 'ArrowUp':
+        return from.y == 0
+      case 'ArrowDown':
+        return from.y == (this.tiles.length - 1)
+      case 'ArrowLeft':
+        return from.x == 0
+      case 'ArrowRight':
+        return from.x == (this.tiles[0].length - 1)
+    }
+  }
+
+  isValidPlayerMove(from, direction) {
+    return !this.triesToMoveOutsideMap(from, direction)
+  }
+
+  startPeek(pos) {
+  }
+
+  moveFromTo(from, to) {
+    this.addChangeListEntry(from)
+    this.addChangeListEntry(to)
+    this.tileAt(to).isVisited = true
+  }
+
+  classesAtPosition(x, y, peek) {
+    const tile = this.tileAt({x, y})
+    if (tile.isVisited) {
+      return [tile.terrain]
+    }
+    if (peek) {
+      return [tile.terrain, 'peek']
+    }
+    return [tile.terrain, 'cloaked']
+  }
+
+  terrainAt (pos) {
+    return this.tiles[pos.y][pos.x].terrain
+  }
+
+  tileAt (pos) {
+    return this.tiles[pos.y][pos.x]
+  }
+
+  addChangeListEntry(point, peek = false) {
+    this.changeList.push({
+      x: point.x,
+      y: point.y,
+      peek: peek
+    });
+  }
+
+  popChanges() {
+    const changes = this.changeList
+    this.changeList = []
+    return changes
+  }
+}
