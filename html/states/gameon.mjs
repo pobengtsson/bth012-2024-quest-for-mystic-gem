@@ -6,14 +6,18 @@ function isSamePosition (a, b) {
   return a.x === b.x && a.y === b.y
 }
 
+function middlePosition(dim) {
+  return Math.floor(dim/2)
+}
+
 export class GameOn extends State {
   constructor(theGame, aScreen) {
     super(theGame, aScreen)
     // this.game.gameOver()
     this.game.gameMap = new GameMap({ width: 15, height: 15 })
     this.game.gameMap.playerPos = {
-      x: Math.floor(this.game.gameMap.dimensions.width / 2),
-      y: Math.floor(this.game.gameMap.dimensions.height / 2)
+      x: middlePosition(this.game.gameMap.dimensions.width),
+      y: middlePosition(this.game.gameMap.dimensions.height)
     }
     this.game.gemPos = randomPosition(this.game.gameMap.dimensions, this.game.prng)
   }
