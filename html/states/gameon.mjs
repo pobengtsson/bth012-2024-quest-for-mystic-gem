@@ -13,7 +13,6 @@ function middlePosition(dim) {
 export class GameOn extends State {
   constructor(theGame, aScreen) {
     super(theGame, aScreen)
-    // this.game.gameOver()
     this.game.gameMap = new GameMap({ width: 15, height: 15 })
     this.game.gameMap.playerPos = {
       x: middlePosition(this.game.gameMap.dimensions.width),
@@ -25,10 +24,6 @@ export class GameOn extends State {
   async loadView() {
     this.screen.classList = ["gameon"]
     this.screen.apply(this.game.gameMap, this.game.gemPos)
-    this.game.gameMap.tileAt(this.game.gameMap.playerPos).isVisited = true
-    this.game.gameMap.startPeek(this.game.gameMap.playerPos, this.game.gameMap.playerPos)
-    this.screen.update(this.game.gameMap)
-    this.screen.updateHealth(this.game.player.health)
   }
 
   gemFound () {
