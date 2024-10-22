@@ -1,0 +1,29 @@
+* {
+  font-family: 'Press_Start_2P';
+}
+
+body {
+  text-align: center;
+}
+
+.container {
+  position: relative;
+}
+
+@keyframes fadeInEffect {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInPeek {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}

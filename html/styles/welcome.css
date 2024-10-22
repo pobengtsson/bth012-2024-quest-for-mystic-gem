@@ -1,0 +1,89 @@
+
+body {
+  background-color: rgb(164, 118, 20)
+}
+
+#gameView.welcome {
+  font-family: "Press Start 2P";
+  color: olive;
+}
+
+h1 {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  margin: 0;
+  width: 45%;
+  text-align: center;
+  font-size: 30px;
+}
+
+p {
+  color: black;
+}
+/* .container {
+  width: 800px;
+  margin: 0 auto;
+} */
+
+.map {
+  position: relative;
+  z-index: 1; /* Ensures it's beneath the h1 */
+  width: 100%;
+  height: 600px;
+  background-image: url('../graphics/welcom-bg.png');
+  width: 600px;
+  /* height: 400px; */
+  border: 5px solid white;
+  margin: 20px auto;
+  background-size: cover;
+}
+
+.input {
+  width: 400px;
+  height: 40px;
+  font-size: 20px;
+  padding: 10px;
+  border: none;
+  outline: none;
+  opacity: 0.7;
+  transition: opacity 0.5s;
+}
+
+.input:hover {
+  opacity: 1.0;
+}
+
+.button {
+  width: 150px;
+  height: 50px;
+  font-size: 20px;
+  animation: rainbow 10s infinite linear;
+  color: white;
+  cursor: pointer;
+  border-width: 4px;
+  border-radius: 10px;
+  border-style: solid;
+  border-color: darkolivegreen;
+}
+
+#start {
+  opacity: 0.5;
+  transition: opacity 0.5s;
+}
+
+#start:hover {
+  opacity: 1.0;
+}
+
+
+@keyframes rainbow {
+  0%, 100% {
+    background-color: hsl(1, 100%, 50%);
+  }
+  50% {
+    background-color: hsl(124, 100%, 50%);
+  }
+}
