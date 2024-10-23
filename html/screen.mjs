@@ -106,4 +106,20 @@ export class Screen {
          }
       })
    }
+
+   processActionMessages(msg, done) {
+      const msgTxt = this.document.getElementById('message')
+      msgTxt.innerHTML = msg.txt
+
+      const board = this.document.getElementById('msgBoard')
+
+      const okBtn = this.document.getElementById('ok-btn')
+      okBtn.addEventListener('click', () => {
+         board.style.display = 'none'
+         msg.action()
+         okBtn.parentElement.replaceChild(okBtn.cloneNode(true), okBtn)
+         done()
+      })
+      board.style.display = 'block'
+   }
 }

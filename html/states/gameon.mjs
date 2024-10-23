@@ -24,6 +24,10 @@ export class GameOn extends State {
   async loadView() {
     this.screen.classList = ["gameon"]
     this.screen.apply(this.game.gameMap, this.game.gemPos)
+    this.game.gameMap.tileAt(this.game.gameMap.playerPos).isVisited = true
+    // this.game.gameMap.startPeek(this.game.gameMap.playerPos, this.game.gameMap.playerPos)
+    // this.screen.update(this.game.gameMap)
+    this.screen.updateHealth(this.game.player.health)
   }
 
   gemFound () {
@@ -44,6 +48,7 @@ export class GameOn extends State {
                this.game.gameMap.moveFromTo(this.game.gameMap.playerPos, nextPosition)
                this.game.gameMap.playerPos = nextPosition
                this.game.player.moveOneStep()
+               this.processNpcs(this.game.gameMap.tileAt(nextPosition))
             } else {
                break update_based_on_event
             }
@@ -60,7 +65,27 @@ export class GameOn extends State {
             console.log('Default')
             break
       }
+      this.screen.updateHealth(this.game.player.health)
       this.screen.update(this.game.gameMap)
+    }
+    // if (this.gemFound()) {
+    //    this.game.gameWon()
+    // }
+    // if (this.game.gameIsOver()) {
+    //   this.game.gameOver()
+    // }
+  }
+
+  processNpcs (tile) {
+    this.game.pauseEventListener()
+    if (tile.npc) {
+      const actionMessage = tile.npc.getActionMessage(this.screen,
+        this.game.player, this.game.gameMap, this.game.gemPos)
+      this.screen.processActionMessages(actionMessage,
+        () => this.game.resumeEventListener())
+      delete tile.npc
+    } else {
+      this.game.resumeEventListener()
     }
   }
 }

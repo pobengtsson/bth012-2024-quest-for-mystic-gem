@@ -6,6 +6,26 @@ export function randomPosition (dim, prng) {
   return { x, y } // NOTE: object property shorthand, same as writing { x: x, y: y}
 }
 
+function peekPositions(pos, width, height) {
+  const row = pos.x
+  const col = pos.y
+  let offsets = [-1, 0, 1] // try changing this to [-2, -1, 0, 1, 2] and see what happens! Why?
+  return offsets.map(i => offsets.map(j => [row + i, col + j]))
+    .flat()
+    .filter(([newRow, newCol]) => {
+      return !(newRow === row && newCol === col)
+         && newRow >= 0 && newRow < height
+         && newCol >= 0 && newCol < width
+    })
+    .map (([x, y])=> { return {x,y} })
+}
+
+function nonOverlappingPositions (list1, list2) {
+  // Use filter and every to find the positions that are not in the second list
+  return list1.filter (position1 => list2.every (position2 => position1.x !== position2.x || position1.y !== position2.y));
+}
+
+
 export class GameMap {
   constructor (dimensions, tileiterator = tileGenerator()) {
     this.dimensions = dimensions
@@ -58,9 +78,25 @@ export class GameMap {
   }
 
   startPeek(pos) {
+    // const peek = peekPositions(pos, this.dimensions.width, this.dimensions.height)
+    // peek.forEach((pos) => {
+    //   this.addChangeListEntry(pos, true)
+    // })
   }
 
   moveFromTo(from, to) {
+    // const peekFromPos = peekPositions(from, this.dimensions.width, this.dimensions.height)
+    // const peekToPos = peekPositions(to, this.dimensions.width, this.dimensions.height)
+
+    // const leavingPeekPos = nonOverlappingPositions(peekFromPos, peekToPos)
+    // const enteringPeekPos = nonOverlappingPositions(peekToPos, peekFromPos)
+
+    // leavingPeekPos.forEach((pos) => {
+    //   this.addChangeListEntry(pos)
+    // })
+    // enteringPeekPos.forEach((pos) => {
+    //   this.addChangeListEntry(pos, true)
+    // })
     this.addChangeListEntry(from)
     this.addChangeListEntry(to)
     this.tileAt(to).isVisited = true
