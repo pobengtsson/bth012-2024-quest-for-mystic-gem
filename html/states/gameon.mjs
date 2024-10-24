@@ -68,9 +68,9 @@ export class GameOn extends State {
       this.screen.updateHealth(this.game.player.health)
       this.screen.update(this.game.gameMap)
     }
-    // if (this.gemFound()) {
-    //    this.game.gameWon()
-    // }
+    if (this.gemFound()) {
+       this.game.gameWon()
+    }
     if (this.game.gameIsOver()) {
       this.game.gameOver()
     }
