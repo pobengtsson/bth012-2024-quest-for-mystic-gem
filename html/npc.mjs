@@ -120,7 +120,7 @@ Be warned!`,
 function distance (a, b) {
   const steps = Math.abs (a.x - b.x) + Math.abs (a.y - b.y)
   if (steps < 2) return 'very close to here'
-  if (steps < 4) return 'in the viscinity'
+  if (steps < 4) return 'in the vicinity'
   if (steps < 7) return 'not too far from here'
   return 'far away'
 }
