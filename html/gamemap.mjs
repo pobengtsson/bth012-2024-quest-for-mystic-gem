@@ -78,25 +78,25 @@ export class GameMap {
   }
 
   startPeek(pos) {
-    // const peek = peekPositions(pos, this.dimensions.width, this.dimensions.height)
-    // peek.forEach((pos) => {
-    //   this.addChangeListEntry(pos, true)
-    // })
+    const peek = peekPositions(pos, this.dimensions.width, this.dimensions.height)
+    peek.forEach((pos) => {
+      this.addChangeListEntry(pos, true)
+    })
   }
 
   moveFromTo(from, to) {
-    // const peekFromPos = peekPositions(from, this.dimensions.width, this.dimensions.height)
-    // const peekToPos = peekPositions(to, this.dimensions.width, this.dimensions.height)
+    const peekFromPos = peekPositions(from, this.dimensions.width, this.dimensions.height)
+    const peekToPos = peekPositions(to, this.dimensions.width, this.dimensions.height)
 
-    // const leavingPeekPos = nonOverlappingPositions(peekFromPos, peekToPos)
-    // const enteringPeekPos = nonOverlappingPositions(peekToPos, peekFromPos)
+    const leavingPeekPos = nonOverlappingPositions(peekFromPos, peekToPos)
+    const enteringPeekPos = nonOverlappingPositions(peekToPos, peekFromPos)
 
-    // leavingPeekPos.forEach((pos) => {
-    //   this.addChangeListEntry(pos)
-    // })
-    // enteringPeekPos.forEach((pos) => {
-    //   this.addChangeListEntry(pos, true)
-    // })
+    leavingPeekPos.forEach((pos) => {
+      this.addChangeListEntry(pos)
+    })
+    enteringPeekPos.forEach((pos) => {
+      this.addChangeListEntry(pos, true)
+    })
     this.addChangeListEntry(from)
     this.addChangeListEntry(to)
     this.tileAt(to).isVisited = true

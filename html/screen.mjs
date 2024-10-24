@@ -36,6 +36,12 @@ function createScreenContainer () {
    return div
 }
 
+function tileToStyleClasses(tile) {
+   const classes = [tile.terrain]
+   if (!tile.visited) classes.push('cloaked')
+   return classes
+}
+
 function styleTileBasedOn(playerPos, tilePos, diamondPos, tile) {
    if (playerPos.x === tilePos.x && playerPos.y === tilePos.y) {
       return ['player']
@@ -44,7 +50,7 @@ function styleTileBasedOn(playerPos, tilePos, diamondPos, tile) {
    // if (diamondPos.x === tilePos.x && diamondPos.y === tilePos.y) {
    //    return ['diamond']
    // }
-   return [tile.terrain]
+   return tileToStyleClasses(tile)
 }
 
 function formatScore(digitCount, score) {
