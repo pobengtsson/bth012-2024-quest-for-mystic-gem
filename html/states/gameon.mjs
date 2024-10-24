@@ -71,9 +71,9 @@ export class GameOn extends State {
     // if (this.gemFound()) {
     //    this.game.gameWon()
     // }
-    // if (this.game.gameIsOver()) {
-    //   this.game.gameOver()
-    // }
+    if (this.game.gameIsOver()) {
+      this.game.gameOver()
+    }
   }
 
   processNpcs (tile) {
